@@ -1,0 +1,1 @@
+Bài lab đơn giản về giấu tin sử dụng CFG (Context-Free Grammar) để tạo văn bản tự nhiên có chứa thông tin ẩn.

@@ -1,0 +1,35 @@
+#!/bin/bash
+
+# Đường dẫn đến tệp goals.config
+GOALS_CONFIG="/usr/local/labtainer/instr_config/goals.config"
+
+# Đọc các mục tiêu từ goals.config
+goals=$(grep "^goal_" "$GOALS_CONFIG" | awk -F'=' '{print $1}' | awk '{print $1}' | sort)
+
+# Tạo tiêu đề bảng
+header=""
+for goal in $goals; do
+    short_name=$(echo "$goal" | sed 's/^goal_//')
+    header="$header $short_name |"
+done
+
+# Tạo dòng phân cách
+divider=$(echo "$header" | sed 's/[^|]/–/g')
+
+# Kiểm tra trạng thái từng mục tiêu
+status_line=""
+for goal in $goals; do
+    goal_status=$(grep "^$goal =.*:.*:.*true" "$GOALS_CONFIG" 2>/dev/null)
+    if [ -n "$goal_status" ]; then
+        status_line="$status_line Y |"
+    else
+        status_line="$status_line - |"
+    fi
+done
+
+# Hiển thị bảng
+echo ""
+echo "$header"
+echo "$divider"
+echo "$status_line"
+echo ""

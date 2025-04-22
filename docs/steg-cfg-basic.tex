@@ -1,0 +1,247 @@
+\documentclass{article}
+\usepackage{graphicx}
+\usepackage{listings}
+\usepackage{color}
+\usepackage{hyperref}
+\usepackage[margin=0.8in]{geometry}
+
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=magenta,      
+    urlcolor=cyan,
+}
+
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},   
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    numbers=left,                    
+    numbersep=5pt,                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=2
+}
+
+\lstset{style=mystyle}
+
+\title{Bài Lab Giấu Tin Dựa trên CFG}
+\author{Labtainers}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\section{Giới thiệu}
+Trong bài lab này, bạn sẽ tìm hiểu về kỹ thuật giấu tin (steganography) sử dụng Context-Free Grammar (CFG). Phương pháp này cho phép ẩn thông điệp bí mật trong văn bản tự nhiên bằng cách sử dụng các quy tắc ngữ pháp phi ngữ cảnh để tạo văn bản từ các lựa chọn nhị phân, đại diện cho các bit của thông điệp bí mật.
+
+\section{Mục tiêu}
+\begin{itemize}
+    \item Hiểu cách sử dụng CFG để giấu tin trong văn bản tự nhiên.
+    \item Thực hành mã hóa thông điệp bí mật vào văn bản.
+    \item Phát hiện và giải mã thông tin ẩn trong văn bản.
+    \item Đánh giá tính tự nhiên và hiệu quả của phương pháp giấu tin dựa trên CFG.
+\end{itemize}
+
+\section{Chuẩn bị}
+Lab bao gồm các thành phần sau:
+\begin{itemize}
+    \item \textbf{generator.py}: Script để mã hóa thông điệp bí mật vào văn bản.
+    \item \textbf{detector.py}: Script để phát hiện và giải mã thông tin ẩn.
+    \item \textbf{grammar.cfg}: Tệp định nghĩa ngữ pháp CFG.
+    \item \textbf{template.txt}: Văn bản mẫu làm cơ sở để tạo văn bản mã hóa.
+    \item \textbf{encode.sh} và \textbf{decode.sh}: Script hỗ trợ mã hóa và phát hiện.
+\end{itemize}
+
+\section{Bài tập 1: Tìm hiểu về CFG Steganography}
+\subsection{Xem cấu trúc ngữ pháp}
+Sử dụng lệnh sau để xem nội dung của tệp ngữ pháp:
+
+\begin{lstlisting}
+cat grammar.cfg
+\end{lstlisting}
+
+Tệp \texttt{grammar.cfg} định nghĩa các quy tắc CFG. Mỗi quy tắc có thể có nhiều lựa chọn (phân tách bởi '||'), và các lựa chọn này được sử dụng để mã hóa các bit của thông điệp bí mật.
+
+\subsection{Câu hỏi}
+\begin{itemize}
+    \item Các ký hiệu không cuối (non-terminal) nào được sử dụng trong \texttt{grammar.cfg}?
+    \item Mỗi ký hiệu không cuối có bao nhiêu lựa chọn? Lựa chọn nào có thể mã hóa 1 bit? Lựa chọn nào cần nhiều hơn 1 bit?
+\end{itemize}
+
+\section{Bài tập 2: Mã hóa thông điệp bí mật}
+\subsection{Tạo văn bản mã hóa}
+Sử dụng script \texttt{encode.sh} để mã hóa thông điệp bí mật:
+
+\begin{lstlisting}
+./encode.sh "secret" "mykey"
+\end{lstlisting}
+
+Thông điệp bí mật và khóa sẽ được băm để tạo chuỗi bit nhị phân, sau đó các bit này quyết định lựa chọn nào được sử dụng trong quy tắc CFG.
+
+Kiểm tra kết quả:
+
+\begin{lstlisting}
+cat encoded_text.txt
+\end{lstlisting}
+
+\subsection{Thử nghiệm với các thông điệp khác}
+Thử mã hóa các thông điệp khác và so sánh văn bản đầu ra:
+
+\begin{lstlisting}
+./encode.sh "hello" "key1" > output1.txt
+./encode.sh "world" "key1" > output2.txt
+diff output1.txt output2.txt
+\end{lstlisting}
+
+\subsection{Câu hỏi}
+\begin{itemize}
+    \item Văn bản mã hóa có thay đổi khi sử dụng các thông điệp khác nhau không? Tại sao?
+    \item Văn bản mã hóa có giống \texttt{template.txt} không? Sự khác biệt nằm ở đâu?
+\end{itemize}
+
+\section{Bài tập 3: Phát hiện và giải mã thông tin ẩn}
+\subsection{Phát hiện thông tin ẩn}
+Sử dụng script \texttt{decode.sh} để kiểm tra xem văn bản có chứa thông tin ẩn không:
+
+\begin{lstlisting}
+./decode.sh encoded_text.txt
+\end{lstlisting}
+
+\subsection{Giải mã với khóa}
+Nếu biết khóa đã sử dụng, thử giải mã:
+
+\begin{lstlisting}
+./decode.sh encoded_text.txt "mykey,wrongkey"
+\end{lstlisting}
+
+\subsection{Câu hỏi}
+\begin{itemize}
+    \item Script \texttt{detector.py} phát hiện bao nhiêu bit ẩn trong văn bản?
+    \item Làm thế nào để cải thiện khả năng giải mã thông điệp gốc?
+\end{itemize}
+
+\section{Bài tập 4: Tạo ngữ pháp riêng}
+\subsection{Tạo tệp ngữ pháp mới}
+Sao chép \texttt{grammar.cfg} và chỉnh sửa để tạo ngữ pháp mới với chủ đề khác (ví dụ: mô tả chuyến du lịch, công thức nấu ăn):
+
+\begin{lstlisting}
+cp grammar.cfg my_grammar.cfg
+nano my_grammar.cfg
+\end{lstlisting}
+
+Ví dụ, tạo ngữ pháp mô tả chuyến du lịch:
+
+\begin{lstlisting}
+Start → My trip to destination1 was adjective1, I visited place1.
+Places I enjoyed:
+Historical Site
+Beach
+Mountain
+Local Market
+
+destination1→Hanoi || Paris
+adjective1→unforgettable || exciting
+place1→many attractions || famous landmarks
+\end{lstlisting}
+
+\subsection{Thử nghiệm với ngữ pháp mới}
+Mã hóa thông điệp với ngữ pháp mới:
+
+\begin{lstlisting}
+python3 generator.py my_grammar.cfg "secret" "mykey" > my_encoded.txt
+\end{lstlisting}
+
+Kiểm tra kết quả:
+
+\begin{lstlisting}
+cat my_encoded.txt
+\end{lstlisting}
+
+Phát hiện thông tin ẩn:
+
+\begin{lstlisting}
+./decode.sh my_encoded.txt
+\end{lstlisting}
+
+\subsection{Câu hỏi}
+\begin{itemize}
+    \item Ngữ pháp mới của bạn có tạo ra văn bản tự nhiên không?
+    \item Làm thế nào để tăng số bit có thể ẩn trong văn bản bằng cách chỉnh sửa ngữ pháp?
+\end{itemize}
+
+\section{Bài tập 5: Đánh giá tính tự nhiên}
+\subsection{So sánh với văn bản thật}
+So sánh văn bản mã hóa với văn bản thật (như \texttt{template.txt}):
+
+\begin{itemize}
+    \item Văn bản mã hóa có mạch lạc và ý nghĩa không?
+    \item Có dấu hiệu nào cho thấy văn bản chứa thông tin ẩn không?
+    \item Làm thế nào để cải thiện tính tự nhiên của văn bản?
+\end{itemize}
+
+\subsection{Câu hỏi}
+\begin{itemize}
+    \item Những yếu tố nào trong văn bản mã hóa có thể bị phát hiện bởi các kỹ thuật phân tích giấu tin (steganalysis)?
+    \item Làm thế nào để giảm khả năng bị phát hiện?
+\end{itemize}
+
+\section{Bài tập 6: Kiểm tra tiến độ với checkwork}
+\subsection{Kiểm tra tiến độ}
+Sử dụng lệnh \texttt{checkwork} để xem tiến độ hoàn thành các mục tiêu của lab:
+
+\begin{lstlisting}
+checkwork
+\end{lstlisting}
+
+Kết quả sẽ hiển thị dưới dạng bảng, với các cột như:
+
+\begin{itemize}
+    \item \texttt{encode}: Đã mã hóa thông điệp thành công chưa?
+    \item \texttt{detect}: Đã phát hiện thông tin ẩn chưa?
+    \item \texttt{custom_grammar}: Đã tạo và sử dụng ngữ pháp mới chưa?
+    \item \texttt{complete}: Đã hoàn thành tất cả mục tiêu chưa?
+\end{itemize}
+
+Ký hiệu \texttt{Y} biểu thị mục tiêu đã đạt, ký hiệu \texttt{-} biểu thị chưa đạt.
+
+\subsection{Câu hỏi}
+\begin{itemize}
+    \item Bạn đã hoàn thành những mục tiêu nào?
+    \item Nếu chưa hoàn thành, bạn cần làm gì để đạt các mục tiêu còn lại?
+\end{itemize}
+
+\section{Phân tích và kết luận}
+\subsection{Ưu điểm và nhược điểm}
+Viết một đoạn ngắn về ưu điểm và nhược điểm của phương pháp giấu tin dựa trên CFG:
+
+\begin{itemize}
+    \item Khả năng ẩn thông tin.
+    \item Khả năng phát hiện.
+    \item Dung lượng thông tin có thể ẩn.
+    \item Tính tự nhiên của văn bản.
+\end{itemize}
+
+\section{Nộp bài}
+Nộp các tệp sau:
+\begin{itemize}
+    \item \texttt{encoded_text.txt}: Văn bản chứa thông điệp bí mật.
+    \item \texttt{my_grammar.cfg}: Tệp ngữ pháp do bạn tạo.
+    \item Báo cáo ngắn (1-2 trang) về quá trình thực hiện, trả lời các câu hỏi, và kết luận về phương pháp giấu tin dựa trên CFG.
+\end{itemize}
+
+\end{document}

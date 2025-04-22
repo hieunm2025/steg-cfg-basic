@@ -1,0 +1,9 @@
+Binary representation of the secret (48 bits): 111100101101101110101101011011011111111111011111
+
+Encoded text:
+Zhonghua University is a comprehensive university with rich diversity of noun3, it consists of 20 noun1.
+These colleges and departments are:
+College of Sciences
+College of Fine Arts
+College of International Business and Management
+School of Communication and Information Engineering

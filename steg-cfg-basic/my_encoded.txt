@@ -1,0 +1,8 @@
+Binary representation of the secret (48 bits): 101011001100001000100111100110110010001010100100
+Encoded text:
+My trip to Paris was exciting, I visited many attractions.
+Places I enjoyed:
+Historical Site
+Beach
+Mountain
+Local Market

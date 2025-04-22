@@ -1,0 +1,10 @@
+Bài lab CFG-Based Steganography
+
+Bài lab này sẽ giúp bạn hiểu về kỹ thuật giấu tin dựa trên Context-Free Grammar.
+Trước khi bắt đầu, vui lòng đọc hướng dẫn lab tại:
+file://LAB_MANUAL
+
+Nếu bạn muốn xem các tài liệu khác, chúng được đặt tại:
+file://LAB_DOCS
+
+Chúc bạn thành công với bài lab!
