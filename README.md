@@ -1,30 +1,4 @@
-Dưới đây là nội dung file `README.md` hướng dẫn thực hành bài lab `STEG-CFG-BASIC` trên GitHub:
 
----
-
-````markdown
-# Bài Lab: Steganography với Văn Phạm Phi Ngữ Cảnh (CFG) và Mã Hóa Huffman
-
-## Giới thiệu
-Bài lab giúp sinh viên hiểu và thực hành kỹ thuật giấu tin trong văn bản tự nhiên bằng cách sử dụng văn phạm phi ngữ cảnh (CFG), kết hợp với mã hóa nhị phân để ẩn thông điệp bí mật dưới dạng văn bản dễ đọc.
-
-## Mục tiêu
-- Hiểu nguyên lý giấu tin bằng CFG.
-- Mã hóa thông điệp nhị phân thành văn bản tự nhiên theo ngữ pháp.
-- Giải mã và phát hiện thông điệp ẩn trong văn bản.
-- Tự tạo và tùy chỉnh ngữ pháp để thử nghiệm giấu và tách tin.
-
----
-
-## 1. Chuẩn bị Lab
-
-### Bước 1: Tải và khởi động bài lab
-```bash
-imodule https://github.com/hieunm2025/steg-cfg-basic/raw/refs/heads/main/imodule.tar
-labtainer -r steg-cfg-basic
-````
-
----
 
 ## 2. Mã hóa thông điệp
 
